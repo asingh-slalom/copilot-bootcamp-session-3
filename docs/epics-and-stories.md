@@ -15,7 +15,7 @@ Based on the requirements in `docs/prd-todo.md` and organized using the structur
 - Overdue Task Visibility
 - Task Sorting
 
-## Stories
+## Story
 
 ### MVP
 
