@@ -1,0 +1,12 @@
+flowchart LR
+    user[User in Browser]
+
+    subgraph monorepo[Monorepo Application]
+        frontend[React Frontend\npackages/frontend]
+        api[Express API\npackages/backend]
+        store[(In-Memory SQLite Store)]
+    end
+
+    user -->|Uses UI| frontend
+    frontend -->|HTTP /api/tasks| api
+    api -->|Reads and writes tasks| store

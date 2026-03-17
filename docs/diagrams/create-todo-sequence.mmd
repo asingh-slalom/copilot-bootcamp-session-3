@@ -1,0 +1,13 @@
+sequenceDiagram
+    actor User
+    participant Frontend as React Frontend
+    participant API as Express API
+    participant Store as In-Memory SQLite Store
+
+    User->>Frontend: Enter task details and submit form
+    Frontend->>+API: POST /api/tasks\n{ title, description, due_date }
+    API->>+Store: INSERT task record
+    Store-->>-API: New task row
+    API-->>-Frontend: 201 Created with task payload
+    Frontend-->>User: Render updated TODO list
+    Note over Store: Data is transient and resets when the backend restarts
