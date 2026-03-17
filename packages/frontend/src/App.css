@@ -58,6 +58,30 @@ button:hover {
   background-color: #21a1c9;
 }
 
+/* Priority button styles */
+.priority-btn {
+  border: 2px solid #7A7A7A;
+  background-color: transparent;
+  color: #7A7A7A;
+}
+
+.priority-btn.selected {
+  border-color: #07F2E6;
+  background-color: #07F2E6;
+  color: #fff;
+}
+
+.priority-btn:hover {
+  border-color: #07F2E6;
+  background-color: rgba(7, 242, 230, 0.1);
+  color: #07F2E6;
+}
+
+.priority-btn.selected:hover {
+  background-color: #07F2E6;
+  color: #fff;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
