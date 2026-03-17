@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  List, ListItem, ListItemText, IconButton, Checkbox, Typography, Box, CircularProgress, Paper, Chip
+  List, ListItem, ListItemText, IconButton, Checkbox, Typography, Box, CircularProgress, Paper, Chip, Button
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -52,6 +52,19 @@ function TaskList({ onEdit }) {
       fetchTasks();
     } catch (err) {
       setError('Failed to update task');
+    }
+  };
+
+  const handlePriorityChange = async (task, newPriority) => {
+    try {
+      await fetch(`/api/tasks/${task.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priority: newPriority })
+      });
+      fetchTasks();
+    } catch (err) {
+      setError('Failed to update priority');
     }
   };
 
@@ -127,7 +140,7 @@ function TaskList({ onEdit }) {
           <ListItem 
             key={task.id} 
             sx={{ 
-              pr: 18,
+              pr: 36,
               py: 1,
               mb: 1,
               borderRadius: 2,
@@ -220,6 +233,41 @@ function TaskList({ onEdit }) {
                   }}
                 />
               )}
+              <Box display="flex" gap={0.5}>
+                {['P1', 'P2', 'P3'].map((p) => {
+                  const taskPriority = task.priority || 'P3';
+                  const selected = taskPriority === p;
+                  return (
+                    <Button
+                      key={p}
+                      size="small"
+                      data-testid={`task-priority-${task.id}-${p}`}
+                      onClick={() => handlePriorityChange(task, p)}
+                      sx={{
+                        minWidth: 32,
+                        px: 0.75,
+                        py: 0.25,
+                        borderRadius: 1,
+                        fontWeight: 600,
+                        fontSize: '0.7rem',
+                        textTransform: 'none',
+                        border: '2px solid',
+                        borderColor: selected ? '#07F2E6' : '#7A7A7A',
+                        backgroundColor: selected ? '#07F2E6' : 'transparent',
+                        color: selected ? '#fff' : '#7A7A7A',
+                        lineHeight: 1,
+                        '&:hover': {
+                          borderColor: '#07F2E6',
+                          backgroundColor: selected ? '#07F2E6' : 'rgba(7, 242, 230, 0.1)',
+                          color: selected ? '#fff' : '#07F2E6',
+                        }
+                      }}
+                    >
+                      {p}
+                    </Button>
+                  );
+                })}
+              </Box>
               <Box 
                 sx={{ 
                   display: 'flex', 
